@@ -1,0 +1,9 @@
+awscli
+pandas
+numpy
+boto3
+ipykernel
+nb_conda_kernels
+pyspark==2.4.5
+configparser
+jupyterlab
