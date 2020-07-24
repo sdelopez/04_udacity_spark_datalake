@@ -162,3 +162,10 @@ Sparkify Tableschecking after ETL :
         users_tables has : 104 records  
         time_tables has : 6813 records  
         songplays_tables has : 7154 records  
+
+**Way of improvement : bridging the gap in developping code for local and for AWS cluster**  
+
+One possible way to bridge local and cloud developement would be to use Docker service Minio, an S3 compatible object storage service to servce local file system.
+
+The pyhton code developed on local PC will handle only S3 API fles/data through **minio**  
+see more detail : [Apache Spark with MinIO Server](https://github.com/minio/cookbook/blob/master/docs/apache-spark-with-minio.md)
