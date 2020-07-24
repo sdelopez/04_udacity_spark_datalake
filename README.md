@@ -97,6 +97,8 @@ However, when the code was refactored in etl.py script, only Spark Dataframe API
 
 ### **Running etl.py in local mode**
 
+- comment lines 212-214 in etl.py to remove S3 bucket path
+- uncomment lines 218-220 in etl.py to use local folder paths
 From the Jupyter terminal, just run the etl.py script :
 ```python
 python etl.py
@@ -122,6 +124,9 @@ sudo sed -i -e '$a\export PYSPARK_PYTHON=/usr/bin/python3' /etc/spark/conf/spark
 ### **Running etl.py on AWS EMR cluster**
 
 On EMR cluster, you will need :  
+- create a S3 bucket 's3//sparkify-tables' to output fact and dimension tables in parquet files
+- uncomment lines 212-214 in etl.py to use S3 bucket path
+- comment lines 218-220 in etl.py to remove local folder paths
 - transfer using SCP etl.py script to the EMR cluster
 - submit a Spark job to run the etl.py script
 ```python
@@ -133,10 +138,27 @@ So run the etl.py script using S3 path "s3://aws_bucket/" to have faster etl pro
 
 See [Udacity - Knowledge discussion - How long does the the ETL should take on the whole dataset?](https://knowledge.udacity.com/questions/172931)
 
-Sparkify Schema/S3 buckets checking after ETL :
+Sparkify Tableschecking after ETL :
 
-- artist_table 201 files, 736.9 kb
-- songplays_table 201 files, 925.6 kb
-- songs_table 14886 files, 16.1 MB
-- time_table 201 files, 375.4 kb
-- users_table 86 - 104.6 kb
+**time to process ETL :**
+- **Local processing** on subset data :
+    - process song_data : 43 s
+    - process log_data : 1:27 min
+    - proces full etl : 2:23 min
+
+        songs_tables has : 71 records  
+        artists_tables has : 69 records  
+        users_tables has : 104 records  
+        time_tables has : 6813 records  
+        songplays_tables has : 6820 record
+
+- **AWS EMR processing** on full dataset :
+    - process song_data : 08:21 min  
+    - process log_data : 02:04 min  
+    - proces full etl : 10:36 min  
+
+        songs_tables has : 14896 records  
+        artists_tables has : 10025 records  
+        users_tables has : 104 records  
+        time_tables has : 6813 records  
+        songplays_tables has : 7154 records  
